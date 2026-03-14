@@ -681,7 +681,7 @@ export default function AdminDashboard() {
               {dishes.map(dish => (
                 <div className={styles.dishRow} key={dish.id}>
                   <img
-                    src={dish.image_url || '/placeholder-dish.jpg'}
+                    src={dish.image_url ? `${API_URL}${dish.image_url}` : '/placeholder-dish.jpg'}
                     alt={dish.name}
                     className={styles.dishImage}
                   />

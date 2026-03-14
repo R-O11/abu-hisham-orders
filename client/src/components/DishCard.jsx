@@ -7,6 +7,8 @@ export default function DishCard({ dish, cartItem, onAdd, onUpdateQty }) {
   const [justAdded, setJustAdded] = useState(false);
   const [showImageModal, setShowImageModal] = useState(false);
   const quantity = cartItem ? cartItem.quantity : 0;
+  const API_URL = import.meta.env.VITE_API_URL || '';
+  const imageSrc = dish.image_url ? `${API_URL}${dish.image_url}` : '/placeholder-dish.jpg';
 
   const handleAdd = () => {
     onAdd(dish);
@@ -27,7 +29,7 @@ export default function DishCard({ dish, cartItem, onAdd, onUpdateQty }) {
           <span>הגדל תמונה</span>
         </div>
         <img
-          src={dish.image_url || '/placeholder-dish.jpg'}
+          src={imageSrc}
           alt={dish.name}
           className={styles.image}
           loading="lazy"
@@ -86,7 +88,7 @@ export default function DishCard({ dish, cartItem, onAdd, onUpdateQty }) {
               <X size={28} />
             </button>
             <img
-              src={dish.image_url || '/placeholder-dish.jpg'}
+              src={imageSrc}
               alt={dish.name}
               className={styles.modalImage}
               onClick={(e) => e.stopPropagation()}

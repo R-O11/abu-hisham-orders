@@ -4,6 +4,7 @@ import { ShoppingCart, Trash2, ArrowLeft, ArrowRight } from 'lucide-react';
 
 export default function Cart({ items, onUpdateQty, onRemove, onClose, onCheckout, total }) {
   const [closing, setClosing] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL || '';
 
   const handleClose = () => {
     setClosing(true);
@@ -32,7 +33,7 @@ export default function Cart({ items, onUpdateQty, onRemove, onClose, onCheckout
             items.map((item) => (
               <div className={styles.cartItem} key={item.dish_id}>
                 <img
-                  src={item.image_url || '/placeholder-dish.jpg'}
+                  src={item.image_url ? `${API_URL}${item.image_url}` : '/placeholder-dish.jpg'}
                   alt={item.dish_name}
                   className={styles.itemImage}
                 />
