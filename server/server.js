@@ -7,6 +7,10 @@ const pool = require('./db');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.get('/', (req, res) => {
+  res.send('Abu Hisham backend is running');
+});
+
 // Middleware
 app.use(cors());
 app.use(express.json());
