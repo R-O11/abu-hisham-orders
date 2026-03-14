@@ -6,7 +6,7 @@ import {
   CheckCircle2, XCircle, Trash2, Edit, Plus, PackageOpen 
 } from 'lucide-react';
 
-const API_BASE = '/api';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const STATUS_LABELS = {
   new: 'חדש',
@@ -38,7 +38,7 @@ function LoginScreen({ onLogin }) {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch(`${API_BASE}/admin/login`, {
+      const res = await fetch(`${API_URL}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -256,7 +256,7 @@ function EditDishModal({ dish, onClose, onSave }) {
       formData.append('sort_order', form.sort_order);
       if (image) formData.append('image', image);
 
-      await fetch(`${API_BASE}/dishes/${dish.id}`, {
+      await fetch(`${API_URL}/api/dishes/${dish.id}`, {
         method: 'PUT',
         body: formData,
       });
@@ -385,7 +385,7 @@ export default function AdminDashboard() {
 
   const fetchOrders = useCallback(async () => {
     try {
-      const res = await fetch(`${API_BASE}/orders`);
+      const res = await fetch(`${API_URL}/api/orders`);
       const data = await res.json();
       setOrders(data);
     } catch (err) { console.error(err); }
@@ -393,7 +393,7 @@ export default function AdminDashboard() {
 
   const fetchDishes = useCallback(async () => {
     try {
-      const res = await fetch(`${API_BASE}/dishes/all`);
+      const res = await fetch(`${API_URL}/api/dishes/all`);
       const data = await res.json();
       setDishes(data);
     } catch (err) { console.error(err); }
@@ -409,7 +409,7 @@ export default function AdminDashboard() {
 
   const updateOrderStatus = async (orderId, status) => {
     try {
-      await fetch(`${API_BASE}/orders/${orderId}/status`, {
+      await fetch(`${API_URL}/api/orders/${orderId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -434,7 +434,7 @@ export default function AdminDashboard() {
       formData.append('available', '1');
       formData.append('sort_order', newDish.sort_order);
       if (newDishImage) formData.append('image', newDishImage);
-      await fetch(`${API_BASE}/dishes`, { method: 'POST', body: formData });
+      await fetch(`${API_URL}/api/dishes`, { method: 'POST', body: formData });
       setNewDish({ name: '', description: '', price: '', sort_order: '0' });
       setNewDishImage(null);
       fetchDishes();
@@ -445,7 +445,7 @@ export default function AdminDashboard() {
   const deleteDish = async (id) => {
     if (!confirm('האם אתה בטוח שברצונך למחוק מנה זו?')) return;
     try {
-      await fetch(`${API_BASE}/dishes/${id}`, { method: 'DELETE' });
+      await fetch(`${API_URL}/api/dishes/${id}`, { method: 'DELETE' });
       fetchDishes();
     } catch (err) { console.error(err); }
   };

@@ -7,7 +7,7 @@ import Checkout from '../components/Checkout';
 import OrderConfirmation from '../components/OrderConfirmation';
 import { UtensilsCrossed, ShoppingBag } from 'lucide-react';
 
-const API_BASE = '/api';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export default function HomePage() {
   const [dishes, setDishes] = useState([]);
@@ -37,7 +37,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchDishes = async () => {
       try {
-        const res = await fetch(`${API_BASE}/dishes`);
+        const res = await fetch(`${API_URL}/api/dishes`);
         if (!res.ok) throw new Error('فشل في تحميل القائمة');
         const data = await res.json();
         setDishes(data);
@@ -91,7 +91,7 @@ export default function HomePage() {
 
   // Submit order
   const handleSubmitOrder = async (orderData) => {
-    const res = await fetch(`${API_BASE}/orders`, {
+    const res = await fetch(`${API_URL}/api/orders`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData),
