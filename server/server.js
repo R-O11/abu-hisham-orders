@@ -5,7 +5,7 @@ const multer = require('multer');
 const pool = require('./db');
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 // Middleware
 app.use(cors());
@@ -218,5 +218,5 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 app.listen(PORT, () => {
-  console.log(`🚀 Abu Hisham Kitchen API running at http://localhost:${PORT}`);
+  console.log(`🚀 Abu Hisham Kitchen API running on port ${PORT}`);
 });
